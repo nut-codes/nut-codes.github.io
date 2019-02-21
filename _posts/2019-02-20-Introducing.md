@@ -35,15 +35,15 @@ All values are normalized against a 255-gram unit size. This allows macronutrien
 
 Nut.codes come in short- and long-form. 
 
-The short form encodes the amount of fat, "net" carbohydrates (that is carbohydrates other than dietary fiber), and protein in a 255-gram unit of food. The values are concatenated, base-64 encoded, and prepended with a `nut://` prefix. 
+The short form encodes the amount of fat, "net" carbohydrates (that is carbohydrates other than dietary fiber), and protein in a 255-gram unit of food. In addition, it can optionally include the amounts of saturated- and trans-fats, dietary fiber, and sugars. The values are concatenated, base-64 encoded, and prepended with a `nut://` prefix. 
 
-The long form encodes the same information, which is followed by a variable-length list of multi-byte tuples, whose first byte indicates the type of value (for example, "micrograms of Vitamin D"), and whose subsequent bytes (for micronutrients) encode the amount, using a logarithmic mapping whose maximum representable value is 255 grams. The tuples can also encode metadata such as serving size, name, and (as a future enhancement) allergen content. 
+The long form encodes the same information as the short form (including optional values), which is then followed by a variable-length list of multi-byte tuples, whose first byte indicates the type of value (for example, "micrograms of Vitamin D"), and whose subsequent bytes (for micronutrients) encode the amount, using a logarithmic mapping whose maximum representable value is 255 grams. The tuples can also encode metadata such as serving size, name, and (as a future enhancement) allergen content. 
 
 ## Examples
 
 A food with no macronutrient content (such as water), would have three zero bytes, which results in `AAAA` when base-64 encoded, so the complete nut.code would be [nut://AAAA](nut://AAAA). 
 
-A 1-cup (240 ml) serving of whole milk has 8 grams of fat, 12 grams of carbohydrate, and 8 grams of protein. When scaled to a 255-gram unit, the result is 9 grams of fat and protein and 14 grams of carbohydrates. This results in a complete short-form nut.code of [nut://CRQJ](nut://CRQJ). 
+A 1-cup (240 ml) serving of whole milk has 8 grams of fat, 13 grams of carbohydrate, and 8 grams of protein. When scaled to a 255-gram unit, the result is 9 grams of fat and protein and 14 grams of carbohydrates. This results in a minimal short-form nut.code of [nut://CRQJ](nut://CRQJ). As mentioned above, it can also include values for saturated- and trans-fats, dietary fiber, and sugars. The scaled values for these are 5, 0, 0, and 13. Finally it can include values for cholesterol and sodium, using a logarithmic encoding discussed below. The resulting values are 74 and 99. This results in a nut.code of [nut://CQ4JBQAADUpj](nut://CQ4JBQAADUpj). 
 
 # Technical Details
 
@@ -59,21 +59,23 @@ The micronutrient table is typically a sparse one, so rather than pad it with a 
 
 Most vitamins and minerals are measured in milligrams or micrograms, although a few are measured in IU or grams or tenths of micrograms. Thus the possible values could range as widely as from zero to 2.55 billion. For this reason a logarithmic scale will be used.
 
-For each micronutrient, a minimum viable quantity (MVQ) will be chosen (based on a 255g serving size's precision in the USDA database). The maximum amount will be 255g. A quantifier of zero will correspond to one unit of the minimum viable quantity. Each increment of the quantifier would multiply the minimum viable quantity by a number (root) calculated as described below:
+For each micronutrient, a minimum viable quantity (MVQ) will be chosen (based on a 255g serving size's precision in the USDA database). The maximum amount will be 255g. A quantifier of zero will correspond to one unit of the minimum viable quantity. Each increment of the quantifier would multiply the minimum viable quantity by a number (base) calculated as described below:
 
-> root = e^ln(m / 256)
+> base = e^ln(m / 256)
 
 Where m is the number of MVQ units required to equal 255g.
 
 Thus the amount expressed in the minimum viable quantity units would be:
 
-> MVQs = root^(n + 1)
+> MVQs = base^(n + 1)
 
 Where n is the quantifier (0-255) for that nutrient. To express a quantity of zero, the entry is omitted from the table. 
 
+To determine the value of n, 
+
 ### Mineral Specifiers
 
-| SP | Nutrient       | MVQ    | Root   |
+| SP | Nutrient       | MVQ    | Base   |
 | --- | -------------- | ------:| ------:|
 | 00 | Calcium        |   1 mg | 1.0498 |
 | 01 | Iron           |  10 µg | 1.0688 |
@@ -91,7 +93,7 @@ Where n is the quantifier (0-255) for that nutrient. To express a quantity of ze
 
 ### Vitamin Specifiers
 
-| SP | Nutrient       | MVQ    | Root   |
+| SP | Nutrient       | MVQ    | Base   |
 | --- | -------------- | ------:| ------:|
 | 10 | Vitamin C      | 100 µg | 1.0593 |
 | 11 | Thiamin        |   1 µg | 1.0785 |
