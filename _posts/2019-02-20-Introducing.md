@@ -71,7 +71,9 @@ Thus the amount expressed in the minimum viable quantity units would be:
 
 Where n is the quantifier (0-255) for that nutrient. To express a quantity of zero, the entry is omitted from the table. 
 
-To determine the value of n, 
+To determine the value of n for a particular quantity and base:
+
+> n = (ln(quantity) / ln(base)) - 1
 
 ### Mineral Specifiers
 
