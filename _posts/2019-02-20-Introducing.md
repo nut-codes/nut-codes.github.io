@@ -61,7 +61,7 @@ Most vitamins and minerals are measured in milligrams or micrograms, although a 
 
 For each micronutrient, a minimum viable quantity (MVQ) will be chosen (based on a 255g serving size's precision in the USDA database). The maximum amount will be 255g. A quantifier of zero will correspond to one unit of the minimum viable quantity. Each increment of the quantifier would multiply the minimum viable quantity by a number (base) calculated as described below:
 
-> base = e^ln(m / 256)
+> base = e^(ln(m) / 256)
 
 Where m is the number of MVQ units required to equal 255g.
 
@@ -78,7 +78,7 @@ To determine the value of n for a particular quantity and base:
 ### Mineral Specifiers
 
 | SP | Nutrient       | MVQ    | Base   |
-| --- | -------------- | ------:| ------:|
+| -- | -------------- | ------:| ------:|
 | 00 | Calcium        |   1 mg | 1.0498 |
 | 01 | Iron           |  10 µg | 1.0688 |
 | 02 | Magnesium      |   1 mg | 1.0498 |
@@ -96,7 +96,7 @@ To determine the value of n for a particular quantity and base:
 ### Vitamin Specifiers
 
 | SP | Nutrient       | MVQ    | Base   |
-| --- | -------------- | ------:| ------:|
+| -- | -------------- | ------:| ------:|
 | 10 | Vitamin C      | 100 µg | 1.0593 |
 | 11 | Thiamin        |   1 µg | 1.0785 |
 | 12 | Riboflavin     |   1 µg | 1.0785 |
@@ -105,10 +105,10 @@ To determine the value of n for a particular quantity and base:
 | 15 | Folate, DFE    |   1 µg | 1.0785 |
 | 16 | Vitamin B-12   |  10 ng | 1.0981 |
 | 17 | Vitamin A, RAE |   1 µg | 1.0785 |
-| 18 | Vitamin A, IU  |   1 IU |    ?   |
+| 18 | Vitamin A, IU  |   1 IU | 1.0735 |
 | 19 | Vitamin E, α-t |  10 µg | 1.0688 |
 | 1A | Vitamin D, 2+3 | 100 ng | 1.0883 |
-| 1B | Vitamin D, IU  |   1 IU |    ?   |
+| 1B | Vitamin D, IU  |   1 IU | 1.0942 |
 | 1C | Vitamin K      | 100 ng | 1.0883 |
 
 ### Serving Sizes
