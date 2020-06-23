@@ -1,4 +1,8 @@
-# Technical Details
+---
+layout: page
+title: Technical Details
+permalink: /details/
+---
 
 A Nut Code encodes the nutrition information of a Food or Serving.
 
