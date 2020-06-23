@@ -44,6 +44,8 @@ Most extended codes represent micronutrient quantities. The key corresponds to a
 
 Currently the only other extended codes represent serving sizes and serving descriptions (TBD). 
 
+Future extended codes could include information about allergens and dietary restrictions such as vegetarian, vegan, kosher, halal, etc. 
+
 ### Extended Code Dictionary
 
 | Code | Nutrient       | Minimum Representable Mass |
