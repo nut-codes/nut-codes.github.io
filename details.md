@@ -55,14 +55,6 @@ Future extended codes could include information about allergens and dietary rest
 | Code | Nutrient       | Minimum Representable Mass |
 |------|----------------|-------------------------------:|
 |00|Water|1 g|
-|01|Total Fat|1 g|
-|02|Carbohydrates|1 g|
-|03|Protein|1 g|
-|04|Fiber|1 g|
-|05|Sugar|1 g|
-|06|Saturated Fat|1 g|
-|07|Monounsaturated Fat|1 g|
-|08|Polyunsaturated Fat|1 g|
 |09|Cholesterol|1 mg|
 |0A|Added Sugar|1 g|
 |0B|Sugar Alcohols|1 g|
