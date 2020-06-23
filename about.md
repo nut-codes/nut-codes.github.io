@@ -10,7 +10,7 @@ Existing food diary apps let you look up many packaged foods and chain-restauran
 
 Meanwhile, many recipe apps have a feature that calculates nutrition information automatically, but getting that information into your food diary app is often a hassle. With Nut Codes, a recipe app can include a button, link, or QR code to automatically load the data into a compatible food diary app. Restaurants can also print a Nut Code for each item in their menu. And printed cookbooks can likewise include scannable codes with their recipes. 
 
-Finally, because Nut Codes aren't looked up in a central database, your food choices can remain private. 
+Finally, because Nut Codes aren't looked up in a central database, the information will never go offline, and your food choices can remain private. 
 
 
 
