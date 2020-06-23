@@ -49,6 +49,14 @@ Currently the only other extended codes represent serving sizes and serving desc
 | Code | Nutrient       | Minimum Representable Mass |
 |------|----------------|-------------------------------:|
 |00|Water|1 g|
+|01|Total Fat|1 g|
+|02|Carbohydrates|1 g|
+|03|Protein|1 g|
+|04|Fiber|1 g|
+|05|Sugar|1 g|
+|06|Saturated Fat|1 g|
+|07|Monounsaturated Fat|1 g|
+|08|Polyunsaturated Fat|1 g|
 |09|Cholesterol|1 mg|
 |0A|Added Sugar|1 g|
 |0B|Sugar Alcohols|1 g|
@@ -65,6 +73,7 @@ Currently the only other extended codes represent serving sizes and serving desc
 |2A|Vitamin E|10 µg|
 |2B|Vitamin K|100 ng|
 |2C|Folate|1 µg|
+|2D|Choline|1 mg|
 |30|Calcium|1 mg|
 |31|Chloride|1 mg|
 |32|Iron|1 mg|
@@ -79,6 +88,5 @@ Currently the only other extended codes represent serving sizes and serving desc
 |3B|Manganese|10 µg|
 |3C|Molybdenum|100 ng|
 |3D|Selenium|100 ng|
-|D0|Caffeine|1 mg|
-|2D|Choline|1 mg|
 |3E|Fluoride|10 µg|
+|D0|Caffeine|1 mg|
