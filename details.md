@@ -20,14 +20,14 @@ The binary data encoded in a Nut Code consists of three parts:
 
 1. A one-byte version number
 2. Eight bytes corresponding to the "standard" nutrients:
-  1. Total Fat
-  2. Carbohydrates
-  3. Protein
-  4. Dietary Fiber
-  5. Sugars
-  6. Saturated Fat
-  7. Monounsaturated Fat
-  8. Polyunsaturated Fat
+    1. Total Fat
+    2. Carbohydrates
+    3. Protein
+    4. Dietary Fiber
+    5. Sugars
+    6. Saturated Fat
+    7. Monounsaturated Fat
+    8. Polyunsaturated Fat
 3. Zero or more two-byte extended codes consisting of a key byte and value byte
 
 ### Standard Nutrients
