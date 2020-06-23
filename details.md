@@ -6,17 +6,17 @@ permalink: /details/
 
 A Nut Code encodes the nutrition information of a Food or Serving.
 
-A *Food* is a unitless representation of the ratios between the overall mass of food and the mass of its constituent nutrients. For purposes of encoding, the overall mass of the food is assumed to be 255 grams. 
+A **Food** is a unitless representation of the ratios between the overall mass of food and the mass of its constituent nutrients. For purposes of encoding, the overall mass of the food is assumed to be 255 grams. 
 
-A *Serving* is a Food plus a Serving Size.
+A **Serving** is a Food plus a Serving Size.
 
-A *Serving Size* represents the mass of a single serving of the food. When omitted, the serving size is assumed to be 100 grams. 
+A **Serving Size** represents the mass of a single serving of the food. When omitted, the serving size is assumed to be 100 grams. 
 
-A *Serving Description* represents the type and quantity of units of food that make up a serving (such  as "3 cookies"). n
+A **Serving Description** represents the type and quantity of units of food that make up a serving (such  as "3 cookies"). 
 
 ## Anatomy of a Nut Code
 
-A Nut Code is a [URL](https://en.wikipedia.org/wiki/URL)-like URI consisting of a `nut://` prefix followed by base-64-encoded binary data. The use of a URL-like format allows a compatible reader app to register for the `nut` scheme and be automatically launched on many platforms when following a Nut Code link or scanning a QR code that resolves to a Nut Code. 
+A Nut Code is a [URL](https://en.wikipedia.org/wiki/URL)-like [URI]((https://en.wikipedia.org/wiki/URL) consisting of a `nut://` prefix followed by base-64-encoded binary data. The use of a URL-like format allows a compatible reader app to register for the `nut` scheme and be automatically launched on many platforms when following a Nut Code link or scanning a QR code that resolves to a Nut Code. 
 
 ## Binary Encoding
 
@@ -34,7 +34,7 @@ The binary data encoded in a Nut Code consists of three parts:
     8. Polyunsaturated Fat
 3. Zero or more two-byte extended codes consisting of a key byte and value byte
 
-### Standard Nutrients
+## Standard Nutrients
 
 The standard nutrients were chosen for the following reasons:
 
