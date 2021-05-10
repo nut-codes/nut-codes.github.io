@@ -4,87 +4,18 @@ title: Technical Details
 permalink: /details/
 ---
 
-A **Nut Code** (short for "nutrition code") encodes the nutrition information of a Food or Serving.
+A **Nut Code** (short for "nutrition code") encodes the nutrition information of a meal or serving. 
 
-A **Food** is a unitless representation of the ratios between the overall mass of food and the mass of its constituent nutrients. For purposes of encoding, the overall mass of the food is assumed to be 255 grams. 
+The initial implementation (the **Nut Macro** code) only encodes macronutrients, that is to say carbohydrates, protein and fat. Carbohydrates should be encoded after subtracting dietary fiber from the total. Each value can be from 0 to 250 grams. Values of less than five grams have a precision of one half of a gram, and values between 10 and 250 grams have a precision of one gram. Meals with more than around 1000 calories may need to be treated as more than one meal. 
 
-A **Serving** is a Food plus a Serving Size.
+Nut Codes are encoded in a URL-like format. This adds somewhat to the overall size of the code, but it facilitates compatibility with existing operating systems. 
 
-A **Serving Size** represents the mass of a single serving of the food. When omitted, the serving size is assumed to be 100 grams. 
+The format consists of a scheme (`nut`), some boilerplate (`://`) and a base-64-encoded string. The base-64-encoded portion should be encoded using a URL-safe encoding style (which subsititutes `-` for `+` and `_` for `/`).
 
-A **Serving Description** represents the type and quantity of units of food that make up a serving (such  as "3 cookies"). 
+For Nut Macro codes, the base-64-encoded string is four characters long, resulting in three bytes of data. These bytes correspond to carbohydrate, protein, and fat content, (in that order). 
 
-## Anatomy of a Nut Code
+Each byte is decoded as follows: For values of less than 10, the number of grams is the byte value divided by two. For byte values of greater than 10, the number of grams is the byte value minus five. 
 
-A Nut Code is a [URL](https://en.wikipedia.org/wiki/URL)-like [URI](https://en.wikipedia.org/wiki/URL) consisting of a `nut://` prefix followed by base-64-encoded binary data. The use of a URL-like format allows a compatible reader app to register for the `nut` scheme and be automatically launched on many platforms when following a Nut Code link or scanning a QR code that resolves to a Nut Code. 
+The number of grams is encoded as follows: If the mass is less than five, divide it by two and round to the nearest integer. If the mass is greater than five, round it to the nearest integer and add five.
 
-## Binary Encoding
-
-The binary data encoded in a Nut Code consists of three parts:
-
-1. A one-byte version number
-2. Eight bytes corresponding to the "standard" nutrients:
-    1. Total Fat
-    2. Carbohydrates
-    3. Protein
-    4. Dietary Fiber
-    5. Sugars
-    6. Saturated Fat
-    7. Monounsaturated Fat
-    8. Polyunsaturated Fat
-3. Zero or more two-byte extended codes consisting of a key byte and value byte
-
-## Standard Nutrients
-
-The standard nutrients were chosen for the following reasons:
-
-- They can be represented to the recommended resolution (1 gram per serving, except for small amounts of fat at 0.5 grams) as a quantity between 0 and 255 grams. 
-- They are present in most foods.
-- They can be base-64 encoded, along with the version, into six ASCII characters.
-
-## Extended Codes
-
-Most extended codes represent micronutrient quantities. The key corresponds to a particular micronutrient, and the value is a logarithmic encoding of the quantity. The logarithmic encoding was chosen primarily for compactness. The smallest floating point number with wide support uses four bytes, and even half-precision floating point numbers can represent a much wider range than is needed. For the smallest trace nutrient values, the minimum quantity might be a tenth of a microgram and the maximum quantity is 255 grams. Logarithmic encoding in a single byte can represent values from 100 nanograms to 255 grams to within 10% of the encoded value. 
-
-Currently the only other extended codes represent serving sizes and serving descriptions (TBD). 
-
-Future extended codes could include information about allergens and dietary restrictions such as vegetarian, vegan, kosher, halal, etc. 
-
-### Extended Code Dictionary
-
-| Code | Nutrient       | Minimum Representable Mass |
-|------|----------------|-------------------------------:|
-|00|Water|1 g|
-|09|Cholesterol|1 mg|
-|0A|Added Sugar|1 g|
-|0B|Sugar Alcohols|1 g|
-|20|Vitamin A|1 µg|
-|21|Thiamin|1 µg|
-|22|Riboflavin|1 µg|
-|23|Niacin|10 µg|
-|24|Pantothenic Acid|100 µg|
-|25|Vitamin B6|1 µg|
-|26|Biotin|10 µg|
-|27|Vitamin B12|10 ng|
-|28|Vitamin C|100 µg|
-|29|Vitamin D|10 ng|
-|2A|Vitamin E|10 µg|
-|2B|Vitamin K|100 ng|
-|2C|Folate|1 µg|
-|2D|Choline|1 mg|
-|30|Calcium|1 mg|
-|31|Chloride|1 mg|
-|32|Iron|1 mg|
-|33|Magnesium|1 mg|
-|34|Phosphorus|1 mg|
-|35|Potassium|10 mg|
-|36|Sodium|1 mg|
-|37|Zinc|10 µg|
-|38|Chromium|100 ng|
-|39|Copper|1 µg|
-|3A|Iodine|1 µg|
-|3B|Manganese|10 µg|
-|3C|Molybdenum|100 ng|
-|3D|Selenium|100 ng|
-|3E|Fluoride|10 µg|
-|D0|Caffeine|1 mg|
+Future extensions may include micronutrient values and possibly things like allergens and other dietary restrictions (e.g. vegetarian, vegan, kosher). 
